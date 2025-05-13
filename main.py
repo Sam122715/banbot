@@ -11,7 +11,8 @@ load_dotenv()
 # 환경 변수 불러오기
 DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 ROBLOX_API_KEY = os.getenv("ROBLOX_API_KEY")
-GUILD_ID = int(os.getenv("GUILD_ID"))  # 문자열 → 정수 변환
+GUILD_ID = int(os.getenv("GUILD_ID"))
+CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 UNIVERSE_ID = os.getenv("UNIVERSE_ID")
 
 print(DISCORD_BOT_TOKEN)
@@ -72,7 +73,7 @@ async def on_ready():
 # 명령어 정의
 @bot.hybrid_command()
 async def banrbx(ctx, userid: str, reason: str, time: int):
-    if ctx.channel.id != 1259048166154702860:
+    if ctx.channel.id != CHANNEL_ID:
         await ctx.send("잘못된 채널입니다 (관리자 전용).")
         return
     response = ban(userid, reason, time)
@@ -80,7 +81,7 @@ async def banrbx(ctx, userid: str, reason: str, time: int):
 
 @bot.hybrid_command()
 async def unbanrbx(ctx, userid: str):
-    if ctx.channel.id != 1259048166154702860:
+    if ctx.channel.id != CHANNEL_ID:
         await ctx.send("잘못된 채널입니다 (관리자 전용).")
         return
     response = unban(userid)
